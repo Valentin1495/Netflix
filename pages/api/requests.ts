@@ -8,3 +8,5 @@ export const requests = {
   fetchRomanceMovies: '/discover/movie?with_genres=10749',
   fetchDocumentaries: '/discover/movie?with_genres=99',
 };
+
+export const imgUrl = 'https://image.tmdb.org/t/p/original';

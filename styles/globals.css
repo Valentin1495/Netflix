@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .banner-btn {
+    @apply text-white text-base md:text-xl flex gap-x-2 items-center hover:opacity-80;
+  }
+
+  .banner-icon {
+    @apply h-4 w-4 md:h-5 md:w-5;
+  }
+}

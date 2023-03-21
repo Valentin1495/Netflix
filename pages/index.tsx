@@ -1,10 +1,49 @@
-import Nav from '@/components/Nav';
+import Header from '@/components/Header';
 import Head from 'next/head';
-// import { Inter } from 'next/font/google';
+import { requests } from './api/requests';
+import { axiosInstance } from './api/axios';
+import Banner from '@/components/Banner';
 
-// const inter = Inter({ subsets: ['latin'] });
+export interface Movie {
+  title: string;
+  backdrop_path: string;
+  media_type?: string;
+  release_date?: string;
+  first_air_date: string;
+  genre_ids: number[];
+  id: number;
+  name: string;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+}
 
-export default function Home() {
+interface Movies {
+  nowPlaying: Movie[];
+  trending: Movie[];
+  topRated: Movie[];
+  romance: Movie[];
+  horror: Movie[];
+  comedy: Movie[];
+  documentaries: Movie[];
+  action: Movie[];
+}
+
+export default function Home({
+  nowPlaying,
+  trending,
+  topRated,
+  romance,
+  horror,
+  documentaries,
+  comedy,
+  action,
+}: Movies) {
   return (
     <>
       <Head>
@@ -14,8 +53,44 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main>
-        <Nav />
+        <Header />
+        <Banner nowPlaying={nowPlaying} />
       </main>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const [
+    nowPlaying,
+    trending,
+    topRated,
+    romance,
+    horror,
+    documentaries,
+    comedy,
+    action,
+  ] = await Promise.all([
+    axiosInstance.get(requests.fetchNowPlaying).then((res) => res.data),
+    axiosInstance.get(requests.fetchTrending).then((res) => res.data),
+    axiosInstance.get(requests.fetchTopRated).then((res) => res.data),
+    axiosInstance.get(requests.fetchRomanceMovies).then((res) => res.data),
+    axiosInstance.get(requests.fetchHorrorMovies).then((res) => res.data),
+    axiosInstance.get(requests.fetchDocumentaries).then((res) => res.data),
+    axiosInstance.get(requests.fetchComedyMovies).then((res) => res.data),
+    axiosInstance.get(requests.fetchActionMovies).then((res) => res.data),
+  ]);
+
+  return {
+    props: {
+      nowPlaying: nowPlaying.results,
+      trending: trending.results,
+      topRated: topRated.results,
+      romance: romance.results,
+      horror: horror.results,
+      documentaries: documentaries.results,
+      comedy: comedy.results,
+      action: action.results,
+    },
+  };
 }
