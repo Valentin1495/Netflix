@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { requests } from './api/requests';
 import { axiosInstance } from './api/axios';
 import Banner from '@/components/Banner';
+import MovieRow from '@/components/MovieRow';
 
 export interface Movie {
   title: string;
@@ -55,6 +56,9 @@ export default function Home({
       <main>
         <Header />
         <Banner nowPlaying={nowPlaying} />
+        <section className='p-8 bg-black'>
+          <MovieRow title='Trending' movies={trending} />
+        </section>
       </main>
     </>
   );

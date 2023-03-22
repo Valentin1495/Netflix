@@ -9,4 +9,4 @@ export const requests = {
   fetchDocumentaries: '/discover/movie?with_genres=99',
 };
 
-export const imgUrl = 'https://image.tmdb.org/t/p/original';
+export const imgUrl = 'https://image.tmdb.org/t/p/';

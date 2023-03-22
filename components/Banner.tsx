@@ -23,12 +23,11 @@ export default function Banner({ nowPlaying }: nowPlaying) {
   };
 
   return (
-    <div className='relative'>
-      <div className='absolute w-full h-screen bg-gradient-to-t from-black' />
+    <div className='relative h-[60vh] lg:h-[80vh]'>
       <img
-        src={`${imgUrl}/${movie?.backdrop_path || movie?.poster_path}`}
+        src={`${imgUrl}/original${movie?.backdrop_path || movie?.poster_path}`}
         alt='Banner Image'
-        className='w-full object-cover h-screen'
+        className='w-full object-cover h-full'
       />
 
       <div className='absolute top-1/3 sm:top-1/4 left-5 right-5 sm:left-10 max-w-lg md:max-w-2xl'>
