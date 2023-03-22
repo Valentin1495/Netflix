@@ -21,7 +21,7 @@ export default function Header() {
 
   return (
     <header
-      className={`z-10 fixed top-0 left-0 right-0 pl-3 transition-colors duration-300 ${
+      className={`z-20 fixed top-0 left-0 right-0 pl-3 transition-colors duration-300 ${
         scrolled && 'bg-black'
       } `}
     >

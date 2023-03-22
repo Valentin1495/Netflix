@@ -53,11 +53,17 @@ export default function Home({
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main>
+      <main className='bg-black'>
         <Header />
         <Banner nowPlaying={nowPlaying} />
-        <section className='p-8 bg-black'>
+        <section className='p-8 space-y-10'>
           <MovieRow title='Trending' movies={trending} />
+          <MovieRow title='Top Rated' movies={topRated} />
+          <MovieRow title='Romance' movies={romance} />
+          <MovieRow title='Horror' movies={horror} />
+          <MovieRow title='Documentary' movies={documentaries} />
+          <MovieRow title='Comedy' movies={comedy} />
+          <MovieRow title='Action' movies={action} />
         </section>
       </main>
     </>
