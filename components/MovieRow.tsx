@@ -1,5 +1,6 @@
 import { Movie } from '@/pages';
 import { imgUrl } from '@/pages/api/requests';
+import Link from 'next/link';
 import { useState } from 'react';
 
 interface Row {
@@ -12,9 +13,12 @@ export default function MovieRow({ title, movies }: Row) {
 
   return (
     <div className='space-y-3'>
-      <h2 className='text-white text-base md:text-2xl font-bold hover:underline cursor-pointer'>
+      <Link
+        href={`/${title}`}
+        className='text-white text-base md:text-2xl font-bold hover:underline cursor-pointer'
+      >
         {title}
-      </h2>
+      </Link>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3'>
         {movies?.slice(0, 12).map((movie) => (
           <div key={movie.id} className='relative group cursor-pointer'>
@@ -30,7 +34,7 @@ export default function MovieRow({ title, movies }: Row) {
         ))}
       </div>
 
-      <div className={`${open ? 'hidden' : 'inline'} flex justify-center`}>
+      <div className={`${open ? 'hidden' : 'block'} flex justify-center`}>
         <button
           onClick={() => setOpen(true)}
           className='bg-white rounded-sm px-2 hover:opacity-90 font-bold'
