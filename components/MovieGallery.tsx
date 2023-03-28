@@ -3,12 +3,12 @@ import { imgUrl } from '@/pages/api/requests';
 import Link from 'next/link';
 import { useState } from 'react';
 
-interface Row {
+interface Gallery {
   title: string;
   movies: Movie[];
 }
 
-export default function MovieRow({ title, movies }: Row) {
+export default function MovieGallery({ title, movies }: Gallery) {
   const [open, setOpen] = useState<boolean>(false);
 
   return (

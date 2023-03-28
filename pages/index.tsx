@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { requests } from './api/requests';
 import { axiosInstance } from './api/axios';
 import Banner from '@/components/Banner';
-import MovieRow from '@/components/MovieRow';
+import MovieGallery from '@/components/MovieGallery';
 
 export interface Movie {
   title: string;
@@ -57,13 +57,13 @@ export default function Home({
         <Header />
         <Banner nowPlaying={nowPlaying} />
         <section className='p-8 space-y-10'>
-          <MovieRow title='Trending' movies={trending} />
-          <MovieRow title='Top Rated' movies={topRated} />
-          <MovieRow title='Romance' movies={romance} />
-          <MovieRow title='Horror' movies={horror} />
-          <MovieRow title='Documentary' movies={documentaries} />
-          <MovieRow title='Comedy' movies={comedy} />
-          <MovieRow title='Action' movies={action} />
+          <MovieGallery title='Trending' movies={trending} />
+          <MovieGallery title='Top Rated' movies={topRated} />
+          <MovieGallery title='Romance' movies={romance} />
+          <MovieGallery title='Horror' movies={horror} />
+          <MovieGallery title='Documentary' movies={documentaries} />
+          <MovieGallery title='Comedy' movies={comedy} />
+          <MovieGallery title='Action' movies={action} />
         </section>
       </main>
     </>
@@ -81,14 +81,14 @@ export async function getServerSideProps() {
     comedy,
     action,
   ] = await Promise.all([
-    axiosInstance.get(requests.fetchNowPlaying).then((res) => res.data),
-    axiosInstance.get(requests.fetchTrending).then((res) => res.data),
-    axiosInstance.get(requests.fetchTopRated).then((res) => res.data),
-    axiosInstance.get(requests.fetchRomanceMovies).then((res) => res.data),
-    axiosInstance.get(requests.fetchHorrorMovies).then((res) => res.data),
-    axiosInstance.get(requests.fetchDocumentaries).then((res) => res.data),
-    axiosInstance.get(requests.fetchComedyMovies).then((res) => res.data),
-    axiosInstance.get(requests.fetchActionMovies).then((res) => res.data),
+    axiosInstance.get(requests.nowPlaying).then((res) => res.data),
+    axiosInstance.get(requests.Trending).then((res) => res.data),
+    axiosInstance.get(requests['Top Rated']).then((res) => res.data),
+    axiosInstance.get(requests.Romance).then((res) => res.data),
+    axiosInstance.get(requests.Horror).then((res) => res.data),
+    axiosInstance.get(requests.Documentary).then((res) => res.data),
+    axiosInstance.get(requests.Comedy).then((res) => res.data),
+    axiosInstance.get(requests.Action).then((res) => res.data),
   ]);
 
   return {
