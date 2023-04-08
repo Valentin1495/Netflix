@@ -1,6 +1,7 @@
 import { Movie } from '@/pages';
 import { imgUrl } from '@/pages/api/requests';
 import { InformationCircleIcon, PlayIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 interface nowPlaying {
@@ -37,7 +38,7 @@ export default function Banner({ nowPlaying }: nowPlaying) {
         <p className='text-white text-base md:text-xl'>
           {truncate(movie?.overview!, 200)}
         </p>
-        <div className='flex justify-start gap-x-10 mt-3'>
+        <div className='flex justify-start gap-x-10 mt-3 mb-5'>
           <button className='banner-btn'>
             <PlayIcon className='banner-icon' /> Play
           </button>
@@ -45,6 +46,9 @@ export default function Banner({ nowPlaying }: nowPlaying) {
             <InformationCircleIcon className='banner-icon' /> More Info
           </button>
         </div>
+        <Link href='/upcoming' className='banner-btn'>
+          See all upcoming movies
+        </Link>
       </div>
     </div>
   );

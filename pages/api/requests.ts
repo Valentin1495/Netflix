@@ -1,4 +1,5 @@
 export const requests = {
+  upComing: '/movie/upcoming',
   nowPlaying: '/movie/now_playing',
   Trending: '/trending/all/week',
   'Top Rated': '/movie/top_rated',
