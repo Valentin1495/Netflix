@@ -52,7 +52,7 @@ export default function Upcoming() {
 
     return () => observer.disconnect();
   }, [callback]);
-  console.log(movies);
+
   return (
     <div className='space-y-3 p-8 bg-black'>
       <h1 className='text-white text-base md:text-2xl font-bold'>
