@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { imgUrl, requests } from './api/requests';
 import { Movie } from '.';
 import { axiosInstance } from './api/axios';
 import { AxiosError } from 'axios';
 import debounce from 'lodash.debounce';
+import { endpoints, imgSrc } from './api/tmdbApi';
 
 export default function Upcoming() {
   // const router = useRouter();
@@ -12,7 +12,7 @@ export default function Upcoming() {
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState<number>(0);
-  const endPoint = requests.upComing;
+  const endPoint = endpoints.upComing;
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -62,7 +62,7 @@ export default function Upcoming() {
         {movies.map((movie, idx) => (
           <div key={idx} className='relative group cursor-pointer'>
             <img
-              src={`${imgUrl}/w500${movie.backdrop_path || movie.poster_path}`}
+              src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
               className='object-cover w-full rounded-md group-hover:opacity-50'
             />

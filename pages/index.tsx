@@ -1,9 +1,17 @@
 import Header from '@/components/Header';
 import Head from 'next/head';
-import { requests } from './api/requests';
-import { axiosInstance } from './api/axios';
 import Banner from '@/components/Banner';
 import MovieGallery from '@/components/MovieGallery';
+import {
+  getActionMovies,
+  getComedyMovies,
+  getDocumentaries,
+  getHorrorMovies,
+  getRomanceMovies,
+  getTopRatedMovies,
+  getTrendingMovies,
+  getUpcomingMovies,
+} from './api/tmdbApi';
 
 export interface Movie {
   title: string;
@@ -81,14 +89,14 @@ export async function getServerSideProps() {
     comedy,
     action,
   ] = await Promise.all([
-    axiosInstance.get(requests.nowPlaying).then((res) => res.data),
-    axiosInstance.get(requests.Trending).then((res) => res.data),
-    axiosInstance.get(requests['Top Rated']).then((res) => res.data),
-    axiosInstance.get(requests.Romance).then((res) => res.data),
-    axiosInstance.get(requests.Horror).then((res) => res.data),
-    axiosInstance.get(requests.Documentary).then((res) => res.data),
-    axiosInstance.get(requests.Comedy).then((res) => res.data),
-    axiosInstance.get(requests.Action).then((res) => res.data),
+    getUpcomingMovies,
+    getTrendingMovies,
+    getTopRatedMovies,
+    getRomanceMovies,
+    getHorrorMovies,
+    getDocumentaries,
+    getComedyMovies,
+    getActionMovies,
   ]);
 
   return {

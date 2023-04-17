@@ -1,5 +1,4 @@
 import { Movie } from '@/pages';
-import { imgUrl } from '@/pages/api/requests';
 import { InformationCircleIcon, PlayIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -25,11 +24,11 @@ export default function Banner({ nowPlaying }: nowPlaying) {
 
   return (
     <div className='relative h-[60vh] lg:h-[80vh]'>
-      <img
+      {/* <img
         src={`${imgUrl}/original${movie?.backdrop_path || movie?.poster_path}`}
         alt='Banner Image'
         className='w-full object-cover h-full'
-      />
+      /> */}
 
       <div className='absolute top-1/3 sm:top-1/4 left-5 right-5 sm:left-10 max-w-lg md:max-w-2xl'>
         <h1 className='py-3 truncate italic text-white text-3xl md:text-5xl'>

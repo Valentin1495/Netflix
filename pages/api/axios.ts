@@ -6,7 +6,3 @@ export const axiosInstance = axios.create({
     api_key: process.env.NEXT_PUBLIC_API_KEY,
   },
 });
-
-export const tmdbAxios = axios.create({
-  baseURL: 'https://api.themoviedb.org/3',
-});

@@ -1,5 +1,5 @@
 import { Movie } from '@/pages';
-import { imgUrl } from '@/pages/api/requests';
+import { imgSrc } from '@/pages/api/tmdbApi';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -23,7 +23,7 @@ export default function MovieGallery({ title, movies }: Gallery) {
         {movies?.slice(0, 12).map((movie) => (
           <div key={movie.id} className='relative group cursor-pointer'>
             <img
-              src={`${imgUrl}/w500${movie.backdrop_path || movie.poster_path}`}
+              src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
               className='object-cover aspect-video rounded-md group-hover:opacity-50'
             />
@@ -52,7 +52,7 @@ export default function MovieGallery({ title, movies }: Gallery) {
             } relative group cursor-pointer`}
           >
             <img
-              src={`${imgUrl}/w500${movie.backdrop_path || movie.poster_path}`}
+              src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
               className='object-cover aspect-video rounded-md group-hover:opacity-50'
             />
