@@ -89,14 +89,14 @@ export async function getServerSideProps() {
     comedy,
     action,
   ] = await Promise.all([
-    getUpcomingMovies,
-    getTrendingMovies,
-    getTopRatedMovies,
-    getRomanceMovies,
-    getHorrorMovies,
-    getDocumentaries,
-    getComedyMovies,
-    getActionMovies,
+    getUpcomingMovies(),
+    getTrendingMovies(),
+    getTopRatedMovies(),
+    getRomanceMovies(),
+    getHorrorMovies(),
+    getDocumentaries(),
+    getComedyMovies(),
+    getActionMovies(),
   ]);
 
   return {

@@ -1,7 +1,10 @@
 import { Movie } from '@/pages';
-import { InformationCircleIcon, PlayIcon } from '@heroicons/react/24/solid';
+import { imgSrc } from '@/pages/api/tmdbApi';
+import { PlayIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import Modal from './Modal';
 
 interface nowPlaying {
   nowPlaying: Movie[];
@@ -9,6 +12,7 @@ interface nowPlaying {
 
 export default function Banner({ nowPlaying }: nowPlaying) {
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   useEffect(() => {
     setMovie(nowPlaying[Math.floor(Math.random() * nowPlaying.length)]);
@@ -24,11 +28,11 @@ export default function Banner({ nowPlaying }: nowPlaying) {
 
   return (
     <div className='relative h-[60vh] lg:h-[80vh]'>
-      {/* <img
-        src={`${imgUrl}/original${movie?.backdrop_path || movie?.poster_path}`}
+      <img
+        src={`${imgSrc}/original${movie?.backdrop_path || movie?.poster_path}`}
         alt='Banner Image'
         className='w-full object-cover h-full'
-      /> */}
+      />
 
       <div className='absolute top-1/3 sm:top-1/4 left-5 right-5 sm:left-10 max-w-lg md:max-w-2xl'>
         <h1 className='py-3 truncate italic text-white text-3xl md:text-5xl'>
@@ -37,18 +41,21 @@ export default function Banner({ nowPlaying }: nowPlaying) {
         <p className='text-white text-base md:text-xl'>
           {truncate(movie?.overview!, 200)}
         </p>
-        <div className='flex justify-start gap-x-10 mt-3 mb-5'>
-          <button className='banner-btn'>
+        <div className='mt-3 mb-5'>
+          <button className='banner-btn' onClick={() => setShowModal(true)}>
             <PlayIcon className='banner-icon' /> Play
           </button>
-          <button className='banner-btn'>
-            <InformationCircleIcon className='banner-icon' /> More Info
-          </button>
         </div>
-        <Link href='/upcoming' className='banner-btn'>
+        <Link href='/upcoming' className='banner-btn w-fit'>
           See all upcoming movies
         </Link>
       </div>
+
+      {showModal &&
+        createPortal(
+          <Modal setShowModal={setShowModal} movie={movie} />,
+          document.body
+        )}
     </div>
   );
 }
