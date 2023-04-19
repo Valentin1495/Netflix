@@ -37,17 +37,21 @@ export default function Modal({ setShowModal, movie }: ModalProps) {
 
   return (
     <div>
-      <div className='z-20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+      <div className='z-20 fixed top-40 lg:top-24 left-1/2 -translate-x-1/2'>
         {trailer ? (
           <iframe
-            src={`https://www.youtube.com/embed/${trailer.key}?controls=0&autoplay=1&mute=1&loop=1`}
+            src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
             title='movie-trailer'
             allowFullScreen
-            className='w'
+            className='w-96 sm:w-[500px] lg:w-[700px] aspect-video'
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
           ></iframe>
         ) : (
-          <p>Trailer is not available</p>
+          <div className='bg-black text-white w-96 sm:w-[500px] lg:w-[700px] aspect-video flex justify-center items-center font-bold text-xl'>
+            Trailer not available
+          </div>
         )}
+        <div></div>
       </div>
       <div
         onClick={() => setShowModal(false)}
