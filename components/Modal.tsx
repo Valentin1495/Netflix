@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getVids } from '@/pages/api/tmdbApi';
 import Loader from './Loader';
 import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 interface Video {
   type: string;
@@ -15,7 +15,7 @@ interface Videos {
 }
 
 export default function Modal() {
-  const [selectedMovie, setSelectedMovie] = useRecoilState(selectedMovieState);
+  const selectedMovie = useRecoilValue(selectedMovieState);
   const setShowModal = useSetRecoilState(modalState);
   const { isLoading, error, data } = useQuery<Videos>({
     queryKey: ['vids'],
@@ -88,7 +88,6 @@ export default function Modal() {
       <div
         onClick={() => {
           setShowModal(false);
-          setSelectedMovie(null);
         }}
         className='z-10 fixed inset-0 bg-black/50'
       ></div>
