@@ -3,8 +3,8 @@ import { imgSrc } from '@/pages/api/tmdbApi';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
-import Modal from './Modal';
+import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
+import { useSetRecoilState } from 'recoil';
 
 interface nowPlaying {
   nowPlaying: Movie[];
@@ -12,7 +12,8 @@ interface nowPlaying {
 
 export default function Banner({ nowPlaying }: nowPlaying) {
   const [movie, setMovie] = useState<Movie | null>(null);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const setSelectedMovie = useSetRecoilState(selectedMovieState);
+  const setShowModal = useSetRecoilState(modalState);
 
   useEffect(() => {
     setMovie(nowPlaying[Math.floor(Math.random() * nowPlaying.length)]);
@@ -42,7 +43,13 @@ export default function Banner({ nowPlaying }: nowPlaying) {
           {truncate(movie?.overview!, 200)}
         </p>
         <div className='mt-3 mb-5'>
-          <button className='banner-btn' onClick={() => setShowModal(true)}>
+          <button
+            className='banner-btn'
+            onClick={() => {
+              setShowModal(true);
+              setSelectedMovie(movie);
+            }}
+          >
             <PlayIcon className='banner-icon' /> Play
           </button>
         </div>
@@ -50,12 +57,6 @@ export default function Banner({ nowPlaying }: nowPlaying) {
           See all upcoming movies
         </Link>
       </div>
-
-      {showModal &&
-        createPortal(
-          <Modal setShowModal={setShowModal} movie={movie} />,
-          document.body
-        )}
     </div>
   );
 }

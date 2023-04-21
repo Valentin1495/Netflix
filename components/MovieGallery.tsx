@@ -2,8 +2,8 @@ import { Movie } from '@/pages';
 import { imgSrc } from '@/pages/api/tmdbApi';
 import Link from 'next/link';
 import { useState } from 'react';
-import { createPortal } from 'react-dom';
-import Modal from './Modal';
+import { useSetRecoilState } from 'recoil';
+import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
 
 interface Gallery {
   title: string;
@@ -12,8 +12,8 @@ interface Gallery {
 
 export default function MovieGallery({ title, movies }: Gallery) {
   const [open, setOpen] = useState<boolean>(false);
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const setShowModal = useSetRecoilState(modalState);
+  const setSelectedMovie = useSetRecoilState(selectedMovieState);
 
   return (
     <div className='space-y-3'>
@@ -77,12 +77,6 @@ export default function MovieGallery({ title, movies }: Gallery) {
           </div>
         ))}
       </div>
-
-      {showModal &&
-        createPortal(
-          <Modal setShowModal={setShowModal} movie={selectedMovie} />,
-          document.body
-        )}
     </div>
   );
 }

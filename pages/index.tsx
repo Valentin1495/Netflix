@@ -12,6 +12,10 @@ import {
   getTrendingMovies,
   getUpcomingMovies,
 } from './api/tmdbApi';
+import { createPortal } from 'react-dom';
+import Modal from '@/components/Modal';
+import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
+import { useRecoilValue } from 'recoil';
 
 export interface Movie {
   title: string;
@@ -53,6 +57,8 @@ export default function Home({
   comedy,
   action,
 }: Movies) {
+  const showModal = useRecoilValue(modalState);
+
   return (
     <>
       <Head>
@@ -74,6 +80,7 @@ export default function Home({
           <MovieGallery title='Action' movies={action} />
         </section>
       </main>
+      {showModal && createPortal(<Modal />, document.body)}
     </>
   );
 }
