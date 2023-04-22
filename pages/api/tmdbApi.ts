@@ -3,6 +3,7 @@ import { axiosInstance } from './axios';
 export const endpoints = {
   upComing: '/movie/upcoming',
   nowPlaying: '/movie/now_playing',
+  genres: '/genre/movie/list',
   Trending: '/trending/all/week',
   'Top Rated': '/movie/top_rated',
   Action: '/discover/movie?with_genres=28',
@@ -40,3 +41,6 @@ export const getActionMovies = () =>
 
 export const getVids = (movieId: number) =>
   axiosInstance.get(`/movie/${movieId}/videos`).then((res) => res.data);
+
+export const getAllGenres = () =>
+  axiosInstance.get(endpoints.genres).then((res) => res.data);
