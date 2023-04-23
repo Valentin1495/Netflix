@@ -74,7 +74,7 @@ export default function Modal() {
 
   return (
     <div>
-      <div className='z-20 bg-black fixed top-32 lg:top-24 left-1/2 -translate-x-1/2'>
+      <div className='z-20 w-96 sm:w-[500px] lg:w-[700px] bg-black fixed top-32 lg:top-24 left-1/2 -translate-x-1/2'>
         {isLoading && <Loader />}
         {error instanceof Error && <p>Something went wrong: {error.message}</p>}
 
@@ -83,7 +83,7 @@ export default function Modal() {
             src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1`}
             title='movie-trailer'
             allowFullScreen
-            className='w-96 sm:w-[500px] lg:w-[700px] aspect-video'
+            className='w-full aspect-video'
             allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
           ></iframe>
         ) : (

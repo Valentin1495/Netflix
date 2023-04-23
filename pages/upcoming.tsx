@@ -4,6 +4,10 @@ import { axiosInstance } from './api/axios';
 import { AxiosError } from 'axios';
 import debounce from 'lodash.debounce';
 import { endpoints, imgSrc } from './api/tmdbApi';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
+import Modal from '@/components/Modal';
+import { createPortal } from 'react-dom';
 
 export default function Upcoming() {
   // const router = useRouter();
@@ -12,6 +16,8 @@ export default function Upcoming() {
 
   const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState<number>(0);
+  const setSelectedMovie = useSetRecoilState(selectedMovieState);
+  const [showModal, setShowModal] = useRecoilState(modalState);
   const endPoint = endpoints.upComing;
 
   useEffect(() => {
@@ -60,7 +66,14 @@ export default function Upcoming() {
       </h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3'>
         {movies.map((movie, idx) => (
-          <div key={idx} className='relative group cursor-pointer'>
+          <div
+            onClick={() => {
+              setSelectedMovie(movie);
+              setShowModal(true);
+            }}
+            key={idx}
+            className='relative group cursor-pointer'
+          >
             <img
               src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
@@ -73,6 +86,7 @@ export default function Upcoming() {
         ))}
         <div ref={ref} className='h-[1px]' />
       </div>
+      {showModal && createPortal(<Modal />, document.body)}
     </div>
   );
 }
