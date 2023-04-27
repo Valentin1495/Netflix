@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
+import Image from 'next/image';
 
 interface Gallery {
   title: string;
@@ -31,12 +32,13 @@ export default function MovieGallery({ title, movies }: Gallery) {
               setShowModal(true);
             }}
             key={movie.id}
-            className='relative group cursor-pointer'
+            className='relative aspect-video group cursor-pointer'
           >
-            <img
+            <Image
               src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
-              className='object-cover aspect-video rounded-md group-hover:opacity-50'
+              fill={true}
+              className='object-cover rounded-md group-hover:opacity-50'
             />
             <h3 className='title opacity-0 group-hover:opacity-100 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-white font-bold'>
               {movie.title || movie.name}
@@ -60,16 +62,17 @@ export default function MovieGallery({ title, movies }: Gallery) {
             key={movie.id}
             className={`${
               open ? 'block' : 'hidden'
-            } relative group cursor-pointer`}
+            } relative aspect-video group cursor-pointer`}
             onClick={() => {
               setSelectedMovie(movie);
               setShowModal(true);
             }}
           >
-            <img
+            <Image
               src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
-              className='object-cover aspect-video rounded-md group-hover:opacity-50'
+              fill={true}
+              className='object-cover rounded-md group-hover:opacity-50'
             />
             <h3 className='title opacity-0 group-hover:opacity-100 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-white font-bold'>
               {movie.title || movie.name}

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
@@ -21,15 +22,17 @@ export default function Header() {
 
   return (
     <header
-      className={`z-20 fixed top-0 w-full pl-3 flex items-center space-x-5 transition-colors duration-300 ${
+      className={`z-20 fixed top-0 w-full p-3 flex items-center space-x-5 transition-colors duration-300 ${
         scrolled && 'bg-black'
       } `}
     >
       <Link href={'/'}>
-        <img
-          src='https://rb.gy/ulxxee'
+        <Image
+          src='https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg'
           alt='Netflix Logo'
-          className='w-32 h-16 cursor-pointer'
+          className='cursor-pointer'
+          width={128}
+          height={64}
         />
       </Link>
 

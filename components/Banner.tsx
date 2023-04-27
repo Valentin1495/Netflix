@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
 import { useSetRecoilState } from 'recoil';
+import Image from 'next/image';
+import Loader from './Loader';
 
 interface nowPlaying {
   nowPlaying: Movie[];
@@ -18,7 +20,7 @@ export default function Banner({ nowPlaying }: nowPlaying) {
   useEffect(() => {
     setMovie(nowPlaying[Math.floor(Math.random() * nowPlaying.length)]);
   }, [nowPlaying]);
-
+  console.log(movie);
   const truncate = (str: string, num: number) => {
     if (str?.length > num) {
       return str?.slice(0, num) + '...';
@@ -27,12 +29,15 @@ export default function Banner({ nowPlaying }: nowPlaying) {
     }
   };
 
+  if (!movie) return <Loader />;
+
   return (
     <div className='relative h-[60vh] lg:h-[80vh]'>
-      <img
+      <Image
         src={`${imgSrc}/original${movie?.backdrop_path || movie?.poster_path}`}
         alt='Banner Image'
-        className='w-full object-cover h-full'
+        fill={true}
+        className='object-cover'
       />
 
       <div className='absolute top-1/3 sm:top-1/4 left-5 right-5 sm:left-10 max-w-lg md:max-w-2xl'>

@@ -88,7 +88,11 @@ export default function Home({
         {showModal && createPortal(<Modal />, document.body)}
       </>
     );
-  return <button onClick={() => signIn('google')}>Sign in</button>;
+  return (
+    <button onClick={() => signIn('google')} className='bg-white'>
+      Sign in
+    </button>
+  );
 }
 
 export async function getServerSideProps() {

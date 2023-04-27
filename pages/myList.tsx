@@ -2,6 +2,7 @@ import { supabase } from '@/utils/supabase';
 import { Movie } from '.';
 import { useSession } from 'next-auth/react';
 import { imgSrc } from './api/tmdbApi';
+import Image from 'next/image';
 
 interface User {
   email: string;
@@ -18,11 +19,12 @@ export default function MyList({ myList }: { myList: User[] }) {
       <h1 className='text-white text-base md:text-2xl font-bold'>My List</h1>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3'>
         {user?.movies.map((movie, idx) => (
-          <div key={idx} className='relative group cursor-pointer'>
-            <img
+          <div key={idx} className='aspect-video relative group cursor-pointer'>
+            <Image
               src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
-              className='object-cover w-full rounded-md group-hover:opacity-50'
+              fill={true}
+              className='object-cover rounded-md group-hover:opacity-50'
             />
             <h3 className='title opacity-0 group-hover:opacity-100 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-white font-bold'>
               {movie.title || movie.name}
