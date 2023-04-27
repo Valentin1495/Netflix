@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getAllGenres, getVids } from '@/pages/api/tmdbApi';
 import Loader from './Loader';
 import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { supabase } from '@/utils/supabase';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';

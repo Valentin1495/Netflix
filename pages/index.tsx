@@ -72,7 +72,7 @@ export default function Home({
           <meta name='viewport' content='width=device-width, initial-scale=1' />
           <link rel='icon' href='/favicon.ico' />
         </Head>
-        <main className='bg-black'>
+        <main>
           <Header />
           <Banner nowPlaying={nowPlaying} />
           <section className='p-8 space-y-10'>

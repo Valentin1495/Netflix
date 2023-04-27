@@ -60,7 +60,7 @@ export default function Upcoming() {
   }, [callback]);
 
   return (
-    <div className='space-y-3 p-8 bg-black'>
+    <div className='space-y-3 p-8'>
       <h1 className='text-white text-base md:text-2xl font-bold'>
         Upcoming Movies
       </h1>

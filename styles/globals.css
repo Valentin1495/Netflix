@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply bg-black;
+  }
+}
+
 @layer components {
   .banner-btn {
     @apply bg-white py-1 px-2 rounded-sm text-base md:text-xl flex gap-x-2 items-center hover:opacity-80;
