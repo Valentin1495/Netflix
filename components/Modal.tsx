@@ -2,7 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { getAllGenres, getVids } from '@/pages/api/tmdbApi';
 import Loader from './Loader';
 import { modalState, selectedMovieState } from '@/atoms/modalAtoms';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { supabase } from '@/utils/supabase';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { Movie } from '@/pages';
 
 interface Video {
   type: string;
@@ -24,8 +28,11 @@ interface Genres {
 }
 
 export default function Modal() {
-  const selectedMovie = useRecoilValue(selectedMovieState);
+  const [selectedMovie, setSelectedMovie] = useRecoilState(selectedMovieState);
   const setShowModal = useSetRecoilState(modalState);
+  const [alreadyAdded, setAlreadyAdded] = useState<boolean>(false);
+  const { data: session } = useSession();
+  const email = session?.user?.email;
 
   const { isLoading, error, data } = useQuery<Videos>({
     queryKey: ['vids'],
@@ -72,6 +79,77 @@ export default function Modal() {
     }
   };
 
+  useEffect(() => {
+    const checkAlreadyAdded = async () => {
+      const { data } = await supabase
+        .from('My List')
+        .select('movies')
+        .eq('email', email);
+
+      const moviesFromList: Movie[] = data![0].movies;
+
+      setAlreadyAdded(
+        !!moviesFromList.find((movie) => movie.id === selectedMovie?.id)
+      );
+    };
+
+    checkAlreadyAdded();
+  }, [email, selectedMovie?.id]);
+
+  const addToList = async () => {
+    const { data } = await supabase
+      .from('My List')
+      .select('movies')
+      .eq('email', email);
+
+    const moviesFromList: Movie[] = data![0].movies;
+
+    const { error } = await supabase
+      .from('My List')
+      .update({
+        movies: [...moviesFromList, selectedMovie],
+      })
+      .eq('email', email);
+
+    if (error) {
+      console.log(error);
+    } else {
+      setAlreadyAdded((prev) => !prev);
+    }
+  };
+
+  const removeFromList = async () => {
+    const { data } = await supabase
+      .from('My List')
+      .select('movies')
+      .eq('email', email);
+
+    const moviesFromList: Movie[] = data![0].movies;
+
+    const { error } = await supabase
+      .from('My List')
+      .update({
+        movies: moviesFromList.filter(
+          (movie) => movie.id !== selectedMovie?.id
+        ),
+      })
+      .eq('email', email);
+
+    if (error) {
+      console.log(error);
+    } else {
+      setAlreadyAdded((prev) => !prev);
+    }
+  };
+
+  const handleMyList = async () => {
+    if (alreadyAdded) {
+      removeFromList();
+    } else {
+      addToList();
+    }
+  };
+
   return (
     <div>
       <div className='z-20 w-96 sm:w-[500px] lg:w-[700px] bg-black fixed top-32 lg:top-24 left-1/2 -translate-x-1/2'>
@@ -100,19 +178,35 @@ export default function Modal() {
             <span>
               {selectedMovie?.release_date || selectedMovie?.first_air_date}
             </span>
-            <button>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                viewBox='0 0 20 20'
-                fill='currentColor'
-                className='w-5 h-5'
-              >
-                <path
-                  fillRule='evenodd'
-                  d='M3.75 3A1.75 1.75 0 002 4.75v10.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0018 15.25v-8.5A1.75 1.75 0 0016.25 5h-4.836a.25.25 0 01-.177-.073L9.823 3.513A1.75 1.75 0 008.586 3H3.75zM10 8a.75.75 0 01.75.75v1.5h1.5a.75.75 0 010 1.5h-1.5v1.5a.75.75 0 01-1.5 0v-1.5h-1.5a.75.75 0 010-1.5h1.5v-1.5A.75.75 0 0110 8z'
-                  clipRule='evenodd'
-                />
-              </svg>
+            <button onClick={handleMyList}>
+              {alreadyAdded ? (
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 24 24'
+                  fill='currentColor'
+                  className='w-6 h-6'
+                >
+                  <path
+                    fillRule='evenodd'
+                    d='M9 1.5H5.625c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5zm6.61 10.936a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 14.47a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z'
+                    clip-rule='evenodd'
+                  />
+                  <path d='M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z' />
+                </svg>
+              ) : (
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                  fill='currentColor'
+                  className='w-5 h-5'
+                >
+                  <path
+                    fillRule='evenodd'
+                    d='M3.75 3A1.75 1.75 0 002 4.75v10.5c0 .966.784 1.75 1.75 1.75h12.5A1.75 1.75 0 0018 15.25v-8.5A1.75 1.75 0 0016.25 5h-4.836a.25.25 0 01-.177-.073L9.823 3.513A1.75 1.75 0 008.586 3H3.75zM10 8a.75.75 0 01.75.75v1.5h1.5a.75.75 0 010 1.5h-1.5v1.5a.75.75 0 01-1.5 0v-1.5h-1.5a.75.75 0 010-1.5h1.5v-1.5A.75.75 0 0110 8z'
+                    clipRule='evenodd'
+                  />
+                </svg>
+              )}
             </button>
           </div>
           <div className='text-gray-200 flex items-center'>
@@ -128,10 +222,10 @@ export default function Modal() {
                 <span className='font-semibold'>{genreNames?.join(', ')}</span>
               </div>
               <h3>
-                Original language:
-                <h3 className='font-semibold'>
+                Original language: <br />
+                <span className='font-semibold'>
                   {selectedMovie?.original_language}
-                </h3>
+                </span>
               </h3>
               <h3>
                 Total votes:{' '}
@@ -146,6 +240,7 @@ export default function Modal() {
       <div
         onClick={() => {
           setShowModal(false);
+          setSelectedMovie(null);
         }}
         className='z-10 fixed inset-0 bg-black/50'
       ></div>

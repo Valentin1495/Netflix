@@ -59,8 +59,8 @@ export default function Home({
   action,
 }: Movies) {
   const showModal = useRecoilValue(modalState);
-  const { data: session, status } = useSession();
-  console.log(session);
+  const { status } = useSession();
+
   if (status === 'loading') return <p>loading...</p>;
 
   if (status === 'authenticated')
