@@ -17,6 +17,7 @@ import Modal from '@/components/Modal';
 import { modalState } from '@/atoms/modalAtoms';
 import { useRecoilValue } from 'recoil';
 import { signIn, useSession } from 'next-auth/react';
+import Loader from '@/components/Loader';
 
 export interface Movie {
   title: string;
@@ -61,7 +62,7 @@ export default function Home({
   const showModal = useRecoilValue(modalState);
   const { status } = useSession();
 
-  if (status === 'loading') return <p>loading...</p>;
+  if (status === 'loading') return <Loader />;
 
   if (status === 'authenticated')
     return (

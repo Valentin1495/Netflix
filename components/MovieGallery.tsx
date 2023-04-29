@@ -37,7 +37,8 @@ export default function MovieGallery({ title, movies }: Gallery) {
             <Image
               src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
-              fill={true}
+              fill
+              sizes='100%'
               className='object-cover rounded-md group-hover:opacity-50'
             />
             <h3 className='title opacity-0 group-hover:opacity-100 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-white font-bold'>
@@ -71,7 +72,8 @@ export default function MovieGallery({ title, movies }: Gallery) {
             <Image
               src={`${imgSrc}/w500${movie.backdrop_path || movie.poster_path}`}
               alt='Thumbnail'
-              fill={true}
+              fill
+              sizes='100%'
               className='object-cover rounded-md group-hover:opacity-50'
             />
             <h3 className='title opacity-0 group-hover:opacity-100 text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-white font-bold'>

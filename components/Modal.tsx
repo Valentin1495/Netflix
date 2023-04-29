@@ -216,7 +216,7 @@ export default function Modal() {
             </p>
             <div className='ml-3 text-center w-1/3 text-sm space-y-2'>
               Genres:
-              {isLoading1 && <p>Loading genres...</p>}
+              {isLoading1 && <Loader />}
               {error1 instanceof Error && <p>Error occured</p>}
               <div className='space-x-1.5'>
                 <span className='font-semibold'>{genreNames?.join(', ')}</span>

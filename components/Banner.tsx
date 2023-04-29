@@ -20,7 +20,7 @@ export default function Banner({ nowPlaying }: nowPlaying) {
   useEffect(() => {
     setMovie(nowPlaying[Math.floor(Math.random() * nowPlaying.length)]);
   }, [nowPlaying]);
-  console.log(movie);
+
   const truncate = (str: string, num: number) => {
     if (str?.length > num) {
       return str?.slice(0, num) + '...';
@@ -36,8 +36,10 @@ export default function Banner({ nowPlaying }: nowPlaying) {
       <Image
         src={`${imgSrc}/original${movie?.backdrop_path || movie?.poster_path}`}
         alt='Banner Image'
-        fill={true}
+        fill
         className='object-cover'
+        sizes='100%'
+        priority
       />
 
       <div className='absolute top-1/3 sm:top-1/4 left-5 right-5 sm:left-10 max-w-lg md:max-w-2xl'>
