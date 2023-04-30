@@ -152,7 +152,7 @@ export default function Modal() {
 
   return (
     <div>
-      <div className='z-20 w-96 sm:w-[500px] lg:w-[700px] bg-black fixed top-32 lg:top-24 left-1/2 -translate-x-1/2'>
+      <div className='z-20 w-96 sm:w-[500px] lg:w-[700px] bg-black fixed top-32 lg:top-12 left-1/2 -translate-x-1/2'>
         {isLoading && <Loader />}
         {error instanceof Error && <p>Something went wrong: {error.message}</p>}
 
